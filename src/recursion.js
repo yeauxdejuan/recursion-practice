@@ -4,28 +4,98 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-var factorial = function(n) {
+var factorial = (n) => {
+
+  //base; if n === 0 is true return 1 && if n < 0 return null
+  //when false the function recusively calls itself 
+  if(n === 0){ return  1} else if(n < 0){return null}
  
+    
+  //recursion: a number * the result of invoking the func - 1 
+    return n * factorial(n - 1)
+
+    // factorial(3) => 3 *(3 - 1) => 3 * 2
+
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array) {
+var sum = (array) => {
+
+  //base: if the lenght of the array strick= 0, return 0
+  if(array.length === 0){ return 0;} 
+
+
+  //recursion: return the array at the 0th index + the result of invoking sum on a copy of the array after the 0th index 
+  return array[0] + sum(array.slice(1))
+
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
-var arraySum = function(array) {
+var arraySum = (array) => {
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = (n) => {
+  //base:
+
+  if(n === 0){return true} 
+  else if(n === 1){return false} 
+
+  //recusrion: if n is a negative number, return a recusive call 
+  else if(n < 0){return isEven(- n)} 
+  return isEven(n - 2)
+
+  /*
+    ** isEven functinoality for negative numbers **
+      isEven(-4) returns true, which invokes isEven(--4) || isEven(4)
+         this then invokes isEven(n - 2) || isEven(4 -2) || isEven(2) which resolves to true ...repeats until 0 which will return true 
+
+
+    ** isEven for positive numbers **
+      isEven(10) returns false for less than 0; then isEven(n-2) || isEven(10 - 2) || isEven(8).....recurively until 0, which is truthy and returns true
+        
+    ** isEven for odd numbers **
+      isEven(9) returns false for less than 0, isEven(n-2) || isEven(9 -2) || isEven(7)...recursively repeats until 1, which is falsey, and returns false
+
+   * 
+   * 
+   * 
+   */
+
+
+
+  
+   
+
+
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+var sumBelow = (n) => {
+
+if(n === 0){ return 0}
+
+if(n < 0){ return n + 1 + sumBelow(n + 1)}
+else {return  n - 1 + sumBelow(n - 1)}
+/*
+
+  ** Functionality for postive input 
+    isBelow(5): 
+     the function returns 5 - 1 + sumBelow(5 - 1) || 4 + sumBelow(4)... + 3 + 2 + 1 + 0 => 10
+
+ * 
+
+  ** Functionality for negative input
+    isBelow(-5):
+      the function returns -5 + 1 + sumBelow(-5 + 1) || -5 + sumBelow(-4)... + -3 + -2 + -1 + 0 =>15
+
+    
+ */
+
 };
 
 // 6. Get the integers in range (x, y).
