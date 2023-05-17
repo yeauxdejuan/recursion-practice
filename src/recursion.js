@@ -39,12 +39,15 @@ var arraySum = (array) => {
 // 4. Check if a number is even.
 var isEven = (n) => {
   //base:
-
+  //if input is || when it resolves to 0, return true: any even number recursively - 2 will = 0  
   if(n === 0){return true} 
+  // the inverse is happening here, where any odd number recursively - 2 will = 1 
   else if(n === 1){return false} 
 
   //recusrion: if n is a negative number, return a recusive call 
+  //if n is < 0 || a -n, recusively - -n || isEven(n); which hits the return statment of isEven(n -2) until it resolves to 0 || 1 
   else if(n < 0){return isEven(- n)} 
+  //recursive call that continues to decrement input number until even(0) or odd(1) 
   return isEven(n - 2)
 
   /*
@@ -64,44 +67,45 @@ var isEven = (n) => {
    * 
    */
 
-
-
-  
-   
-
-
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = (n) => {
-
+  //base if n strick= 0; return 0
 if(n === 0){ return 0}
 
-if(n < 0){ return n + 1 + sumBelow(n + 1)}
-else {return  n - 1 + sumBelow(n - 1)}
-/*
+//if n is less than 0, return that negative number plus 1, because its towards 0 plus sum below that negative number
+else if(n < 0){ return n + 1 + sumBelow(n + 1)}
 
+// else the number is postive so return towards 0, which is -1, plus the recurr call of n - 1
+else {return  n - 1 + sumBelow(n - 1)}
+
+/*
   ** Functionality for postive input 
     isBelow(5): 
      the function returns 5 - 1 + sumBelow(5 - 1) || 4 + sumBelow(4)... + 3 + 2 + 1 + 0 => 10
-
  * 
-
   ** Functionality for negative input
     isBelow(-5):
-      the function returns -5 + 1 + sumBelow(-5 + 1) || -5 + sumBelow(-4)... + -3 + -2 + -1 + 0 =>15
-
-    
+      the function returns -5 + 1 + sumBelow(-5 + 1) || -4 + sumBelow(-4)... + -3 + -2 + -1 + 0 => -10
  */
-
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
-};
+var range =  (x, y, out = []) => {
+
+  const compass = x < y ? 1 : -1; 
+  //if x and y are even, return an empty array
+  if(x === y) return out;
+  //if x and y are only one number apart, return an empty array
+  if(x === y - compass) return out;
+  // return a new array of <x> + the factor of x <||> y + the recusive invokation of range(x + compass, y)
+  return out.concat(x + compass, range(x + compass, y));
+}
+//};
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
@@ -109,23 +113,74 @@ var range = function(x, y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+
+    if (exp === 0){return 1}
+    
+    else if(exp === 1){return base}
+    
+    else if(exp < 0){return 1/exponent(base, -exp)}
+
+
+    return base * exponent(base , exp -1)
+
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
-var powerOfTwo = function(n) {
+var powerOfTwo = (n) => {
+//base 
+  //case: when 2^0 = 1, return true/ stop
+if(n === 1){return true}
+//base
+  //case: if a number isnt even or if a number is 0
+else if(n % 2 !== 0 || n === 0){return false}
+//recursion
+  //case invoke function of input number divided by 2 recursively until true or false 
+return powerOfTwo(n / 2)
+
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+var reverse = (string) => {
+//base
+  //case: if a string length is less than one, return string
+    if(string === ''){ return string}
+
+//base
+  //case: 
+
+//recursion 
+  // recusively call input string beginning at it's 1st index, plus the value of the 0th index 
+    // 'hello' => ello + h
+      //'ello' => llo + e
+        //'llo' => lo + l
+  return reverse(string.substr(1)) + string.charAt(0)
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
-};
+var palindrome = (str) => {
+  //regex to remove spaces and characters
+  // redeclre str to lowwer case and replace with regex 
+  let  strr = str.toLowerCase().replace(' ', '');
 
+  // base case
+    // if the length of <str> is 1, or an empty string, then <str> is a palindrome
+  if(strr.length === 1 || strr.length === 0){return true;}
+
+    // if the first letter and the last letter isnt equal, then <str> isnt a palindrome
+  if(strr.slice(0, 1) !== strr.slice(-1)){return false;}  
+  
+  //recursion
+    // return <str> modified at the first and last index 
+    return palindrome(strr.slice(1, -1) );
+
+
+   // invoke Palindrome('eye')
+   // BASE // 
+}
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
 // modulo(5,2) // 1
@@ -135,10 +190,24 @@ var modulo = function(x, y) {
   
 };
 
-// 12. Write a function that multiplies two numbers without using the * operator  or
+// 12. Write a function that multiplies two numbers without using the * operator or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
 var multiply = function(x, y) {
+
+      
+  if (x === 0 || y === 0){return 0}
+
+    if(x === 1){return y}
+
+      if(y === 1){return x}
+ 
+ 
+  
+      return x + multiply(x-1, y)
+
+
+
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
