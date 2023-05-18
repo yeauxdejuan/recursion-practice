@@ -193,26 +193,52 @@ var modulo = function(x, y) {
 // 12. Write a function that multiplies two numbers without using the * operator or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
+
+/*
+  //BASE:
+    // if x or y = 0, return 0
+      //if y is less than 0
+        //recursion
+          //mulitply(2, -3)
+            // returns -2 + multiply(2, -3 + 1 ) || -2 + multiply(2, -2)
+              base // fail
+                //recursion
+                    -2 + -2 + multiply(2, - 1)
+                      base //fail 
+                        recursion 
+                          -2 + -2 + -2 + multply(2, -1)
+                            base // fail 
+                            //recursion 
+                              //-2 + -2 + -2 multiply(2, 0)
+                                     => -2 + -2 + -2 + 0 = 6
+
+
+*/
 var multiply = function(x, y) {
 
       
   if (x === 0 || y === 0){return 0}
 
-    if(x === 1){return y}
-
-      if(y === 1){return x}
- 
- 
-  
-      return x + multiply(x-1, y)
-
-
+   
+  if(y < 0){return -x + multiply(x, y+1)}
+   
+      
+      return x + multiply(x, y-1)
 
 };
+
+
+
+
+
+
+
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
+ 
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -230,21 +256,48 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  //base:
+    //if the length of both strings are empty return true
+    if(str1.length === 0 && str2.length === 0){return true}
+  //base:
+  //if the 0th index of string1 doesnt = the oth index of str2, return false
+  if(str1.charAt(0) !== str2.charAt(0)){return false}
+  //recursion 
+    // recursively return str1 & str2 and the 1st index untl it reaches base case of having a length of 0
+  return compareStr(str1.slice(1), str2.slice(1))
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = (str) => {
+  //if the lenght of a string is 0, return an empty array
+  if(str.length === 0){return []}
+  //else
+    //return an array with the first index of a string,
+      //use the spread op to include the return  values of the the recur call str.splice(1)
+  return [str[0], ...createArray(str.slice(1))]
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
+var reverseArr =  (array) => {
+  
+  //let arrayy = array.reverse()
+if(array.length === 0){return []}
+
+  let last = array.length - 1
+
+  return [array[last], ...reverseArr(array.slice(0, last))]
+
+
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length) {
+var buildList = (value, length) =>{
+
+  
 };
 
 // 19. Count the occurence of a value inside a list.
